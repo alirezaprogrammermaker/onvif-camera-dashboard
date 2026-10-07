@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+
+# Local dashboard settings and recordings
+settings.json
+settings.tmp
+recordings/
+*.mp4
+
+# Local environment and editor files
+.venv/
+venv/
+.env
+.vscode/

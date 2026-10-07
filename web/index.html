@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101723">
+  <title>داشبورد دوربین</title>
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="داشبورد دوربین">
+        <span class="brand-mark" aria-hidden="true">◉</span>
+        <span><strong>ناظر</strong><small>داشبورد دوربین</small></span>
+      </a>
+      <div class="connection">
+        <span id="connection-dot" class="status-dot"></span>
+        <span id="connection-label">در حال اتصال...</span>
+        <span class="divider"></span>
+        <span id="camera-address">—</span>
+        <button id="refresh-button" class="icon-button" type="button" title="به‌روزرسانی وضعیت" aria-label="به‌روزرسانی وضعیت">↻</button>
+      </div>
+    </header>
+
+    <section class="intro">
+      <div>
+        <p class="eyebrow">مدیریت محلی دوربین</p>
+        <h1 id="camera-title">دوربین شبکه</h1>
+        <p id="camera-subtitle" class="muted">در حال دریافت اطلاعات دوربین...</p>
+      </div>
+      <div class="live-chip"><span class="live-pulse"></span> اتصال مستقیم در شبکه محلی</div>
+    </section>
+
+    <section class="layout">
+      <div class="main-column">
+        <article class="card viewer-card">
+          <div class="card-heading">
+            <div><span class="section-kicker">پخش زنده</span><h2>نمای دوربین</h2></div>
+            <div class="viewer-actions">
+              <label class="select-wrap">
+                <span class="sr-only">کیفیت تصویر</span>
+                <select id="profile-select" aria-label="انتخاب کیفیت تصویر" disabled></select>
+              </label>
+              <button id="snapshot-button" class="button button-quiet" type="button" disabled>ثبت تصویر</button>
+            </div>
+          </div>
+          <div class="video-frame">
+            <img id="video" alt="تصویر زنده دوربین" hidden>
+            <div id="video-placeholder" class="video-placeholder">
+              <span class="camera-glyph" aria-hidden="true">◉</span>
+              <strong>پخش زنده آماده است</strong>
+              <span>برای شروع، دکمه‌ی زیر را بزنید.</span>
+            </div>
+            <div id="video-error" class="video-error" hidden></div>
+            <span id="live-badge" class="live-badge" hidden><i></i> زنده</span>
+          </div>
+          <div class="player-bar">
+            <button id="play-button" class="button button-primary" type="button" disabled>
+              <span id="play-icon" aria-hidden="true">▶</span><span id="play-label">شروع پخش</span>
+            </button>
+            <button id="record-button" class="button button-record" type="button" disabled>● شروع ضبط</button>
+            <span id="record-status" class="record-status" role="status">ضبط متوقف است</span>
+            <span id="stream-detail" class="stream-detail">منتظر اطلاعات استریم</span>
+            <span class="transport-label">RTSP · H.264</span>
+          </div>
+        </article>
+
+        <article class="card controls-card">
+          <div class="card-heading">
+            <div><span class="section-kicker">کنترل دوربین</span><h2>حرکت دوربین و زوم پیش‌نمایش</h2></div>
+            <span id="ptz-badge" class="feature-badge">در حال بررسی PTZ</span>
+          </div>
+          <div class="ptz-layout">
+            <div class="direction-pad" aria-label="جهت حرکت">
+              <span class="pad-center" aria-hidden="true">＋</span>
+              <button class="pad-button pad-up" data-direction="up" type="button" aria-label="حرکت به بالا">↑</button>
+              <button class="pad-button pad-right" data-direction="right" type="button" aria-label="حرکت به راست">→</button>
+              <button class="pad-button pad-down" data-direction="down" type="button" aria-label="حرکت به پایین">↓</button>
+              <button class="pad-button pad-left" data-direction="left" type="button" aria-label="حرکت به چپ">←</button>
+            </div>
+            <div class="zoom-controls">
+              <span class="control-label">بزرگ‌نمایی نمای زنده</span>
+              <div class="zoom-buttons">
+                <button id="zoom-in" class="zoom-button" type="button" aria-label="بزرگ‌نمایی بیشتر">+</button>
+                <button id="zoom-out" class="zoom-button" type="button" aria-label="بزرگ‌نمایی کمتر">−</button>
+                <button id="zoom-reset" class="zoom-reset" type="button">۱×</button>
+              </div>
+              <span id="zoom-level" class="zoom-level">۱× · فقط پیش‌نمایش</span>
+              <button id="stop-button" class="button button-stop" type="button" disabled>■ توقف حرکت</button>
+            </div>
+            <label class="speed-control" for="ptz-speed">
+              <span class="speed-label"><span>سرعت حرکت دوربین</span><strong id="ptz-speed-value">۳٪</strong></span>
+              <input id="ptz-speed" type="range" min="3" max="15" value="3" step="1">
+              <span class="speed-hint">هر بار فشردن، یک حرکت کوتاه انجام می‌شود.</span>
+            </label>
+            <div class="control-note">
+              <span class="note-icon" aria-hidden="true">⌁</span>
+              <p>جهت افقی اصلاح شده است. زوم این بخش فقط تصویر زنده‌ی همین صفحه را بزرگ می‌کند؛ قابلیت زوم خود دوربین در آزمون تصویری اثر قابل‌مشاهده نداشت.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card settings-card">
+          <div class="card-heading">
+            <div><span class="section-kicker">مدیریت دستگاه</span><h2>تنظیمات تصویر</h2></div>
+            <button id="settings-refresh" class="button button-quiet" type="button">بازخوانی</button>
+          </div>
+          <p class="card-description">تنظیمات قابل‌ویرایش در firmware فعلی به encoder تصویر محدود است. مقدار فاصله‌ی کدگذاری و بیت‌ریت را می‌توان خواند، اما دوربین تغییر interval را با وجود پاسخ موفق اعمال نمی‌کند. سرویس تنظیمات سنسور (نوردهی/تراز سفیدی) و تنظیمات شبکه در ONVIF این دوربین در دسترس نیستند. ذخیره‌ی تغییرات ممکن است استریم همان پروفایل را برای چند لحظه قطع کند.</p>
+          <form id="settings-form" class="settings-form">
+            <div class="settings-profile-row">
+              <label class="setting-field">
+                <span>پروفایل تصویر</span>
+                <select id="settings-profile" required disabled></select>
+              </label>
+              <label class="setting-field">
+                <span>وضوح تصویر</span>
+                <select id="settings-resolution" required disabled></select>
+              </label>
+              <label class="setting-field">
+                <span>نرخ فریم</span>
+                <span class="number-field"><input id="settings-fps" type="number" min="1" max="30" required disabled><small>فریم بر ثانیه</small></span>
+              </label>
+              <div class="setting-field readonly-setting">
+                <span>فاصله‌ی کدگذاری</span>
+                <strong id="settings-interval">—</strong>
+                <small>دوربین نوشتن این مقدار را اعمال نکرد؛ فقط‌خواندنی است.</small>
+              </div>
+            </div>
+            <div class="settings-sliders">
+              <label class="setting-field">
+                <span class="range-caption"><span>کیفیت تصویر</span><strong id="settings-quality-value">—</strong></span>
+                <input id="settings-quality" type="range" min="0" max="5" step="1" disabled>
+                <small>بازه‌ی مجاز را دوربین تعیین می‌کند.</small>
+              </label>
+              <label class="setting-field">
+                <span class="range-caption"><span>طول GOP</span><strong id="settings-gop-value">—</strong></span>
+                <input id="settings-gop" type="range" min="1" max="100" step="1" disabled>
+                <small>تعداد فریم بین فریم‌های کلیدی.</small>
+              </label>
+              <div class="setting-field readonly-setting">
+                <span>کُدک و پروفایل فعلی</span>
+                <strong id="settings-codec">—</strong>
+                <small>دوربین برای تغییر امن این مقدار گزینه‌ای اعلام نکرده است.</small>
+              </div>
+              <div class="setting-field readonly-setting">
+                <span>محدودیت بیت‌ریت فعلی</span>
+                <strong id="settings-bitrate">—</strong>
+                <small>محدوده‌ی معتبر برای تغییر از دوربین دریافت نشد؛ فقط نمایش داده می‌شود.</small>
+              </div>
+            </div>
+            <div class="settings-footer">
+              <span id="settings-message" class="settings-message" role="status">در حال خواندن تنظیمات دوربین...</span>
+              <button id="settings-save" class="button button-primary" type="submit" disabled>ذخیره‌ی تنظیمات</button>
+            </div>
+          </form>
+          <details class="recording-settings">
+            <summary>تنظیمات ضبط روی این رایانه</summary>
+            <div class="recording-form">
+              <label class="setting-field" for="record-folder">
+                <span>پوشه‌ی ذخیره‌ی ویدئوها</span>
+                <span class="folder-field">
+                  <input id="record-folder" type="text" autocomplete="off" spellcheck="false">
+                  <button id="record-browse" class="button button-quiet" type="button">انتخاب پوشه</button>
+                </span>
+              </label>
+              <label class="setting-field" for="record-minutes">
+                <span>مدت هر فایل ویدئو</span>
+                <span class="number-field">
+                  <input id="record-minutes" type="number" min="1" max="1440" step="1" value="10">
+                  <small>دقیقه (۱ تا ۱۴۴۰)</small>
+                </span>
+              </label>
+              <p class="recording-note">ضبط با کیفیت اصلی استریم و بدون تبدیل تصویر انجام می‌شود. برش فایل‌ها روی نزدیک‌ترین فریم کلیدی ممکن است کمی از مدت انتخابی بیشتر شود؛ صدای دوربین در استریم موجود نیست.</p>
+              <div class="settings-footer">
+                <span id="record-settings-message" class="settings-message" role="status">در حال خواندن تنظیمات ضبط...</span>
+                <button id="record-settings-save" class="button button-primary" type="button">ذخیره‌ی تنظیمات ضبط</button>
+              </div>
+            </div>
+          </details>
+        </article>
+
+      </div>
+
+      <aside class="side-column">
+        <article class="card info-card">
+          <div class="card-heading">
+            <div><span class="section-kicker">وضعیت دستگاه</span><h2>مشخصات</h2></div>
+            <span class="mini-icon" aria-hidden="true">⌘</span>
+          </div>
+          <dl class="info-list">
+            <div><dt>سازنده</dt><dd id="info-maker">—</dd></div>
+            <div><dt>مدل</dt><dd id="info-model">—</dd></div>
+            <div><dt>نسخه‌ی نرم‌افزار</dt><dd id="info-firmware">—</dd></div>
+            <div><dt>شماره‌ی سریال</dt><dd id="info-serial">—</dd></div>
+            <div><dt>ساعت دوربین</dt><dd id="info-clock">—</dd></div>
+          </dl>
+          <div id="profile-summary" class="profile-summary"></div>
+        </article>
+
+        <article class="card relay-card">
+          <div class="card-heading">
+            <div><span class="section-kicker">خروجی دستگاه</span><h2>رله</h2></div>
+            <span id="relay-badge" class="feature-badge">در حال بررسی</span>
+          </div>
+          <p class="card-description">اگر خروجی رله به دستگاهی متصل باشد، تغییر وضعیت آن روی همان دستگاه اثر می‌گذارد.</p>
+          <div class="relay-actions">
+            <button id="relay-on" class="button button-relay" type="button" disabled>فعال‌کردن</button>
+            <button id="relay-off" class="button button-quiet" type="button" disabled>غیرفعال‌کردن</button>
+          </div>
+          <p class="subtle-note">وضعیت فعلی رله از این دوربین قابل‌خواندن نیست.</p>
+        </article>
+
+        <article class="card capability-card">
+          <div class="card-heading">
+            <div><span class="section-kicker">قابلیت‌ها</span><h2>سرویس‌های دوربین</h2></div>
+          </div>
+          <ul id="capability-list" class="capability-list">
+            <li><span class="cap-dot pending"></span>در حال دریافت وضعیت سرویس‌ها</li>
+          </ul>
+        </article>
+        <article class="card capability-card">
+          <div class="card-heading">
+            <div><span class="section-kicker">امکانات اعلام‌نشده</span><h2>صدا و تعقیب سوژه</h2></div>
+          </div>
+          <ul class="capability-list">
+            <li><span class="cap-dot warn"></span>میکروفن: منبع صوتی با کانال فعال گزارش نشده</li>
+            <li><span class="cap-dot warn"></span>اسپیکر: خروجی صدا یا ترک صوتی در پروفایل‌ها گزارش نشده</li>
+            <li><span class="cap-dot warn"></span>تعقیب سوژه: سرویس Analytics / Events در دوربین اعلام نشده</li>
+          </ul>
+          <p class="subtle-note">این قابلیت‌ها از سمت firmware/ONVIF دوربین در دسترس نیستند؛ رابط وب به‌تنهایی نمی‌تواند آن‌ها را فعال کند.</p>
+        </article>
+      </aside>
+    </section>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <footer><span>اتصال فقط از همین رایانه انجام می‌شود.</span><span id="last-updated"></span></footer>
+  </main>
+  <script src="/app.js" defer></script>
+</body>
+</html>
