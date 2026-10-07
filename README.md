@@ -47,7 +47,7 @@ Download [`install.bat`](https://raw.githubusercontent.com/alirezaprogrammermake
 2. Downloads the latest project files and runs ONVIF WS-Discovery on the local network.
 3. Starts the dashboard, opens it in the default browser, and creates a desktop shortcut.
 
-If discovery finds exactly one ONVIF camera, setup uses it automatically. If it finds none or multiple devices, it asks for the camera's local IPv4 address. Windows Package Manager (App Installer) and an internet connection are required. No administrator access or Python packages are required. To remove the application, delete `%LOCALAPPDATA%\Programs\ONVIFCameraDashboard`, `%LOCALAPPDATA%\CameraDashboard`, and the desktop shortcut; Python and FFmpeg can be uninstalled from Windows Settings.
+Discovery tries ONVIF WS-Discovery and scans local IPv4 subnets no larger than 1024 addresses (`/22` to `/32`) for the common ONVIF port `8899`. If it finds exactly one camera, setup uses it automatically. If it finds none or multiple devices, it asks for the camera's local IPv4 address. Windows Package Manager (App Installer) and an internet connection are required. No administrator access or Python packages are required. To remove the application, delete `%LOCALAPPDATA%\Programs\ONVIFCameraDashboard`, `%LOCALAPPDATA%\CameraDashboard`, and the desktop shortcut; Python and FFmpeg can be uninstalled from Windows Settings.
 
 ## Local recording
 

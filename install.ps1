@@ -89,7 +89,22 @@ try {
   Copy-Item -LiteralPath $sourceWeb -Destination $targetWeb -Recurse -Force
 
   Write-Step "Finding the camera on your local network"
-  $discoverOutput = @(& $python (Join-Path $installDirectory "discover_camera.py") --timeout 4 2>$null)
+  $subnets = @(
+    Get-NetIPAddress -AddressFamily IPv4 -ErrorAction SilentlyContinue |
+      Where-Object {
+        $_.IPAddress -notmatch '^(127\.|169\.254\.)' -and
+        $_.InterfaceAlias -notmatch 'vEthernet|WSL|Loopback|Default Switch' -and
+        $_.PrefixLength -ge 22 -and $_.PrefixLength -le 24
+      } |
+      ForEach-Object { "$($_.IPAddress)/$($_.PrefixLength)" } |
+      Select-Object -Unique
+  )
+  $discoveryScript = Join-Path $installDirectory "discover_camera.py"
+  $discoveryArguments = @($discoveryScript, "--timeout", "4")
+  foreach ($subnet in $subnets) {
+    $discoveryArguments += @("--subnet", $subnet)
+  }
+  $discoverOutput = @(& $python @discoveryArguments 2>$null)
   if ($LASTEXITCODE -ne 0) { $discoverOutput = @() }
   $cameras = @($discoverOutput | ForEach-Object { "$_".Trim() } | Where-Object { $_ -match '^\d{1,3}(\.\d{1,3}){3}$' } | Select-Object -Unique)
   if ($cameras.Count -eq 1) {
