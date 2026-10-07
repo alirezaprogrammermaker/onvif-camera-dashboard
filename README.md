@@ -39,6 +39,16 @@ python .\camera_web.py --ip 192.0.2.10 --port 8766
 
 Stop the dashboard with `Ctrl+C`. An active recording is finalized when the server shuts down normally.
 
+## Windows one-click installer
+
+Download [`install.bat`](https://raw.githubusercontent.com/alirezaprogrammermaker/onvif-camera-dashboard/main/install.bat) and double-click it. The installer:
+
+1. Installs Python 3.12 and FFmpeg for the current Windows user using `winget`.
+2. Downloads the latest project files and runs ONVIF WS-Discovery on the local network.
+3. Starts the dashboard, opens it in the default browser, and creates a desktop shortcut.
+
+If discovery finds exactly one ONVIF camera, setup uses it automatically. If it finds none or multiple devices, it asks for the camera's local IPv4 address. Windows Package Manager (App Installer) and an internet connection are required. No administrator access or Python packages are required. To remove the application, delete `%LOCALAPPDATA%\Programs\ONVIFCameraDashboard`, `%LOCALAPPDATA%\CameraDashboard`, and the desktop shortcut; Python and FFmpeg can be uninstalled from Windows Settings.
+
 ## Local recording
 
 Open the collapsed **Recording settings** section to choose a destination folder and a segment length from 1 to 1440 minutes. The default is 10 minutes. Save the settings, then use **Start recording** in the player bar. Recording saves the camera's original video without re-encoding; segment edges depend on keyframes and may exceed the configured length slightly. The camera stream used during development had no audio track, so recordings do not contain audio.

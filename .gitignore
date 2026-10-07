@@ -12,3 +12,7 @@ recordings/
 venv/
 .env
 .vscode/
+
+# Installer downloads and transient bundles
+*.zip
+installer-temp/

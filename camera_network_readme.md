@@ -34,3 +34,5 @@ python .\camera_diagnostics.py --ip 192.0.2.10
 ```
 
 The diagnostic reports unsupported methods separately from failures. It does not move the camera, activate relays, or change settings. If FFmpeg is on `PATH`, it also tries decoding one frame from each returned stream.
+
+On Windows, `install.bat` installs Python and FFmpeg, downloads the dashboard, attempts local ONVIF discovery, and starts the app. If automatic discovery cannot uniquely identify a camera, it asks for its LAN IPv4 address.
